@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Will You Be My Valentine?</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      color: white;
+      padding: 50px;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 18px;
+      margin: 10px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+    }
+    .yes {
+      background-color: #ff4d6d;
+      color: white;
+    }
+    .no {
+      background-color: white;
+      color: #ff4d6d;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+
+<h1>💘 Valentine Challenge 💘</h1>
+<p id="text">You have unlocked the final level...</p>
+
+<button class="yes" onclick="yesClicked()">YES ❤️</button>
+<button class="no" id="noButton" onmouseover="moveButton()">NO 💔</button>
+
+<script>
+function yesClicked() {
+  document.getElementById("text").innerHTML = 
+  "YAYYYY 😍 You’re officially my Valentine! 💖";
+}
+
+function moveButton() {
+  const button = document.getElementById("noButton");
+  const x = Math.random() * window.innerWidth;
+  const y = Math.random() * window.innerHeight;
+  button.style.left = x + "px";
+  button.style.top = y + "px";
+}
+</script>
+
+</body>
+</html>
