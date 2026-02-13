@@ -1,46 +1,110 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Will You Be My Valentine?</title>
+  <title>Shaniyah’s Game Challenge</title>
   <style>
     body {
       text-align: center;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      background: linear-gradient(to right, #ff758c, #ff7eb3);
       color: white;
-      padding: 50px;
+      padding: 40px;
+      overflow: hidden;
     }
+
+    h1 {
+      font-size: 32px;
+    }
+
     button {
-      padding: 15px 25px;
-      font-size: 18px;
+      padding: 12px 25px;
+      font-size: 16px;
       margin: 10px;
       border: none;
-      border-radius: 25px;
+      border-radius: 20px;
       cursor: pointer;
+      transition: 0.3s;
     }
+
+    .next {
+      background-color: white;
+      color: #ff4d6d;
+    }
+
     .yes {
       background-color: #ff4d6d;
       color: white;
     }
+
     .no {
       background-color: white;
       color: #ff4d6d;
       position: absolute;
     }
+
+    #gameBox {
+      margin-top: 30px;
+      font-size: 20px;
+    }
   </style>
 </head>
 <body>
 
-<h1>💘 Valentine Challenge 💘</h1>
-<p id="text">You have unlocked the final level...</p>
+<h1>💘 Shaniyah’s Valentine Trials 💘</h1>
+<div id="gameBox">
+  <p>Welcome Shaniyah 😌</p>
+  <p>You must pass 3 levels to unlock something special...</p>
+  <button class="next" onclick="level1()">Start Level 1</button>
+</div>
 
-<button class="yes" onclick="yesClicked()">YES ❤️</button>
-<button class="no" id="noButton" onmouseover="moveButton()">NO 💔</button>
+<!-- Background Music -->
+<audio autoplay loop>
+  <source src="danielcaesar.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+
+function level1() {
+  document.getElementById("gameBox").innerHTML =
+  "<p>LEVEL 1: Compatibility Test 😏</p>" +
+  "<p>If we had a date night, what are we doing?</p>" +
+  "<button class='next' onclick='level2()'>A) Romantic dinner</button>" +
+  "<button class='next' onclick='level2()'>B) Movie & cuddles</button>" +
+  "<button class='next' onclick='level2()'>C) Causing chaos together</button>";
+}
+
+function level2() {
+  document.getElementById("gameBox").innerHTML =
+  "<p>LEVEL 2: Serious Question 🤨</p>" +
+  "<p>Who’s falling in love first?</p>" +
+  "<button class='next' onclick='level3()'>A) Me</button>" +
+  "<button class='next' onclick='level3()'>B) You</button>" +
+  "<button class='next' onclick='level3()'>C) Already did</button>";
+}
+
+function level3() {
+  document.getElementById("gameBox").innerHTML =
+  "<p>LEVEL 3: Final Test 😈</p>" +
+  "<p>If I steal your hoodie, what happens?</p>" +
+  "<button class='next' onclick='finalQuestion()'>A) You can keep it</button>" +
+  "<button class='next' onclick='finalQuestion()'>B) I’m stealing yours</button>" +
+  "<button class='next' onclick='finalQuestion()'>C) We share it</button>";
+}
+
+function finalQuestion() {
+  document.getElementById("gameBox").innerHTML =
+  "<p>Calculating results... 🧠</p>" +
+  "<p>Heart compatibility: 100% 💕</p>" +
+  "<h2>Shaniyah… Will you be my Valentine? ❤️</h2>" +
+  "<button class='yes' onclick='yesClicked()'>YES 😍</button>" +
+  "<button class='no' id='noButton' onmouseover='moveButton()'>NO 💔</button>";
+}
+
 function yesClicked() {
-  document.getElementById("text").innerHTML = 
-  "YAYYYY 😍 You’re officially my Valentine! 💖";
+  document.getElementById("gameBox").innerHTML =
+  "<h2>YAYYYYY 🥰</h2>" +
+  "<p>You’re officially my Valentine 💖</p>" +
+  "<p>Daniel Caesar playing in the background like a movie scene 🎶</p>";
 }
 
 function moveButton() {
@@ -50,6 +114,7 @@ function moveButton() {
   button.style.left = x + "px";
   button.style.top = y + "px";
 }
+
 </script>
 
 </body>
