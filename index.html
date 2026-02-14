@@ -1,217 +1,143 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Shaniyah’s Ultimate Game Challenge</title>
+  <title>Be My Valentine ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <style>
     body {
+      margin: 0;
       text-align: center;
       font-family: Arial, sans-serif;
-      background: linear-gradient(to right, #ff758c, #ff7eb3);
-      color: white;
-      padding: 40px;
+      background: linear-gradient(to bottom right, #ffe6f0, #ffccd5);
       overflow: hidden;
     }
 
-    h1 { font-size: 30px; }
-
-    #gameBox {
-      margin-top: 30px;
-      font-size: 20px;
-      position: relative;
-      z-index: 2;
+    h1 {
+      margin-top: 100px;
+      color: #d6336c;
+      padding: 0 20px;
     }
 
     button {
-      padding: 12px 25px;
-      font-size: 16px;
-      margin: 10px;
+      padding: 15px 30px;
+      font-size: 18px;
+      margin: 15px;
       border: none;
-      border-radius: 20px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
     }
 
-    .next { background: white; color: #ff4d6d; }
-    .yes { background: #ff4d6d; color: white; }
-    .no {
-      background: white;
-      color: #ff4d6d;
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+    }
+
+    #noBtn {
+      background-color: #777;
+      color: white;
+      position: relative;
+    }
+
+    #questionSection {
+      display: none;
+    }
+
+    .confetti {
       position: absolute;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: fall 3s linear infinite;
     }
 
-    /* Love Meter */
-    #meterContainer {
-      width: 80%;
-      background: rgba(255,255,255,0.3);
-      margin: 20px auto;
-      border-radius: 20px;
-    }
-
-    #loveMeter {
-      height: 20px;
-      width: 0%;
-      background: #ff1e56;
-      border-radius: 20px;
-      transition: width 0.5s;
-    }
-
-    /* Floating Hearts */
-    .heart {
-      position: absolute;
-      bottom: -10px;
-      animation: floatUp 6s linear infinite;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 0.8; }
-      100% { transform: translateY(-100vh); opacity: 0; }
-    }
-
-    /* Screen Shake */
-    .shake {
-      animation: shake 0.3s;
-    }
-
-    @keyframes shake {
-      0% { transform: translate(0,0); }
-      25% { transform: translate(5px,5px); }
-      50% { transform: translate(-5px,-5px); }
-      75% { transform: translate(5px,-5px); }
-      100% { transform: translate(0,0); }
-    }
-
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      pointer-events: none;
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+      }
     }
   </style>
 </head>
+
 <body>
 
-<h1>💘 Shaniyah’s 7-Level Game Trials 💘</h1>
+<h1 id="questionText">Hi ❤️</h1>
+<button id="startBtn" onclick="startGame()">Start</button>
 
-<div id="meterContainer">
-  <div id="loveMeter"></div>
-</div>
-
-<div id="gameBox">
-  <p>Welcome Shaniyah 😌</p>
-  <p>Complete all 7 levels to unlock your fate...</p>
-  <button class="next" onclick="nextLevel()">Start</button>
+<div id="questionSection">
+  <button id="yesBtn" onclick="handleYes()">Yes</button>
+  <button id="noBtn" onclick="moveNo()">No</button>
 </div>
 
 <audio id="bgMusic" loop>
   <source src="danielcaesar.mp3" type="audio/mpeg">
 </audio>
 
-<script>
-document.addEventListener("click", function() {
-  document.getElementById("bgMusic").play();
-}, { once: true });
-</script>
-
-
-<canvas id="confetti"></canvas>
+<audio id="clapSound">
+  <source src="clapping.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-let level = 0;
-let love = 0;
+let step = 0;
 
 const questions = [
-"If we go on a date, what’s the move?",
-"Who’s falling in love first?",
-"If I steal your hoodie?",
-"Who’s more dramatic?",
-"What’s our couple nickname?",
-"Who apologizes first after fake arguments?",
-"Are we main character energy?"
+  "Do you know how beautiful you are? 💕",
+  "Do you make my heart race every time I see you? ❤️",
+  "Are you the best thing that ever happened to me? 😍",
+  "Will you be my Valentine? 💖"
 ];
 
-function nextLevel() {
-  if (level < 7) {
-    love += 14;
-    document.getElementById("loveMeter").style.width = love + "%";
+const yesResponses = [
+  "Because you truly are the most beautiful girl in my world 💕",
+  "Every time you smile, my heart skips a beat ❤️",
+  "You changed my life in the best way possible 😍",
+  "SHE SAID YESSS ❤️🎉"
+];
 
-    document.getElementById("gameBox").innerHTML =
-    "<p>LEVEL " + (level+1) + "</p>" +
-    "<p>" + questions[level] + "</p>" +
-    "<button class='next' onclick='nextLevel()'>Cute Answer</button>" +
-    "<button class='next' onclick='nextLevel()'>Fun Answer</button>" +
-    "<button class='next' onclick='nextLevel()'>Chaotic Answer</button>";
+function startGame() {
+  document.getElementById("startBtn").style.display = "none";
+  document.getElementById("questionSection").style.display = "block";
+  document.getElementById("bgMusic").play();
+  document.getElementById("questionText").innerText = questions[0];
+}
 
-    level++;
+function handleYes() {
+  document.getElementById("questionText").innerText = yesResponses[step];
+
+  if (step < questions.length - 1) {
+    step++;
+    setTimeout(() => {
+      document.getElementById("questionText").innerText = questions[step];
+    }, 2000);
   } else {
-    finalQuestion();
+    celebrate();
   }
 }
 
-function finalQuestion() {
-  document.getElementById("loveMeter").style.width = "100%";
-  document.getElementById("gameBox").innerHTML =
-  "<h2>Love Meter: MAXED OUT 💖</h2>" +
-  "<h2>Shaniyah… Will you be my Valentine? ❤️</h2>" +
-  "<button class='yes' onclick='yesClicked()'>YES 😍</button>" +
-  "<button class='no' id='noButton' onmouseover='noHover()'>NO 💔</button>";
+function moveNo() {
+  var noBtn = document.getElementById("noBtn");
+  noBtn.style.position = "absolute";
+  noBtn.style.top = Math.random() * (window.innerHeight - 50) + "px";
+  noBtn.style.left = Math.random() * (window.innerWidth - 100) + "px";
 }
 
-function yesClicked() {
-  document.getElementById("gameBox").innerHTML =
-  "<h2>YAYYYYY 🥰</h2>" +
-  "<p>You’re officially my Valentine 💕</p>";
+function celebrate() {
+  document.getElementById("bgMusic").pause();
+  document.getElementById("clapSound").play();
   startConfetti();
 }
 
-function noHover() {
-  document.body.classList.add("shake");
-  setTimeout(() => document.body.classList.remove("shake"), 300);
-
-  const button = document.getElementById("noButton");
-  button.style.left = Math.random() * window.innerWidth + "px";
-  button.style.top = Math.random() * window.innerHeight + "px";
-}
-
-/* Floating Hearts */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (Math.random() * 20 + 15) + "px";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 500);
-
-/* Confetti */
-const canvas = document.getElementById("confetti");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let pieces = [];
-
 function startConfetti() {
-  for (let i = 0; i < 150; i++) {
-    pieces.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height - canvas.height,
-      r: Math.random() * 6 + 4,
-      color: "hsl(" + Math.random() * 360 + ",100%,50%)"
-    });
+  for (let i = 0; i < 120; i++) {
+    let confetti = document.createElement("div");
+    confetti.classList.add("confetti");
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.backgroundColor =
+      "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+    confetti.style.animationDuration =
+      (Math.random() * 3 + 2) + "s";
+    document.body.appendChild(confetti);
   }
-  requestAnimationFrame(updateConfetti);
-}
-
-function updateConfetti() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  pieces.forEach(p => {
-    p.y += 3;
-    ctx.fillStyle = p.color;
-    ctx.fillRect(p.x, p.y, p.r, p.r);
-  });
-  requestAnimationFrame(updateConfetti);
 }
 </script>
 
